@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+  <title>顧客図面管理</title>
+</head>
+
+<body id="drawing_management_body">
+  <header>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">yamaguch</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link" href="#">Home</a>
+            <a class="nav-link" href="#">図面Drawing</a>
+            <a class="nav-link" href="#">比較Comparison</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- アップロード -->
+  <section class="d-flex justify-content-center align-items-center my-3 bg-light pb-5">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="my-3">
+          <h2>図面アップロード</h2>
+        </div>
+      </div>
+
+      <div class="row justify-content-center align-items-center">
+        <div class="col-md-6 d-flex justify-content-center align-items-center">
+          <div class="uploader">
+            <input type="file" name="file" />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card p-3" style="width: 100%;">
+            <form action="#">
+              <div class="mb-3">
+                <label for="client" class="form-label">顧客名 :</label>
+                <select name="client" id="client" class="form-select">
+                  <option value="0">選択</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="model_name" class="form-label">機種 :</label>
+                <input id="model_name" type="text" name="model_name" class="form-control" placeholder="入力してください">
+              </div>
+              <div class="mb-3">
+                <label for="figure_number" class="form-label">図番 :</label>
+                <input id="figure_number" type="text" name="figure_number" class="form-control" placeholder="入力してください">
+              </div>
+              <div class="mb-3">
+                <label for="version" class="form-label">バージョン :</label>
+                <input id="version" type="text" name="version" class="form-control" placeholder="入力してください">
+              </div>
+              <div class="mb-3">
+                <label for="sheet" class="form-label">ページ :</label>
+                <select name="sheet" id="sheet" class="form-select">
+                  <option value="1" selected>1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 登録図面 -->
+  <section class="mt-4 mb-3 mx-5">
+    <div class="text-center mt-5 mb-4">
+      <h2>登録されている顧客図面</h2>
+    </div>
+    <div class="col-12 d-flex justify-content-end mb-4">
+      <div class="input-group w-25">
+        <input type="text" class="form-control" placeholder="キーワードを入力">
+        <button class="btn btn-outline-success" type="button" id="button-addon2">
+          <i class="fas fa-search"></i> 検索
+        </button>
+      </div>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">顧客名</th>
+          <th scope="col">機種名</th>
+          <th scope="col">図番</th>
+          <th scope="col">バージョン</th>
+          <th scope="col">ページ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td class="align-middle">TEXT</td>
+          <td class="align-middle">TEXT</td>
+          <td class="align-middle">
+            <div class="d-flex align-items-center gap-2">
+              xxx-xxx-xxx
+              <!-- ボタンモーダル -->
+              <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">見る</button>
+            </div>
+            <!-- モーダル -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">図番</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    指定した図面表示
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="align-middle">A</td>
+          <td class="align-middle">@mdo</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>TEXT</td>
+          <td>TEXT</td>
+          <td><a href="">xxx-xxx-xxx</a></td>
+          <td>1</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>TEXT</td>
+          <td>TEXT</td>
+          <td><a href="">xxx-xxx-xxx</a></td>
+          <td>3</td>
+          <td>@twitter</td>
+        </tr>
+        <tr>
+          <th scope="row">4</th>
+          <td>TEXT</td>
+          <td>TEXT</td>
+          <td><a href="">xxx-xxx-xxx</a></td>
+          <td>A</td>
+          <td>@twitter</td>
+        </tr>
+        <tr>
+          <th scope="row">5</th>
+          <td>TEXT</td>
+          <td>TEXT</td>
+          <td><a href="">xxx-xxx-xxx</a></td>
+          <td>A</td>
+          <td>@twitter</td>
+        </tr>
+        <tr>
+          <th scope="row">6</th>
+          <td>TEXT</td>
+          <td>TEXT</td>
+          <td><a href="">xxx-xxx-xxx</a></td>
+          <td>A</td>
+          <td>@twitter</td>
+        </tr>
+        <tr>
+          <th scope="row">7</th>
+          <td>TEXT</td>
+          <td>TEXT</td>
+          <td><a href="">xxx-xxx-xxx</a></td>
+          <td>A</td>
+          <td>@twitter</td>
+        </tr>
+        <tr>
+          <th scope="row">8</th>
+          <td>TEXT</td>
+          <td>TEXT</td>
+          <td><a href="">xxx-xxx-xxx</a></td>
+          <td>A</td>
+          <td>@twitter</td>
+        </tr>
+        <tr>
+          <th scope="row">9</th>
+          <td>TEXT</td>
+          <td>TEXT</td>
+          <td><a href="">xxx-xxx-xxx</a></td>
+          <td>2</td>
+          <td>@twitter</td>
+        </tr>
+        <tr>
+          <th scope="row">10</th>
+          <td>TEXT</td>
+          <td>TEXT</td>
+          <td><a href="">xxx-xxx-xxx</a></td>
+          <td>1</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <nav aria-label="Page navigation example" class="d-flex justify-content-center my-5">
+    <ul class="pagination">
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <footer>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark pt-4">
+      <div class="container-fluid">
+        <div class="text-white text-center w-100">
+          <p>Copyright text</p>
+        </div>
+      </div>
+    </nav>
+  </footer>
+
+
+</body>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // 特定の input[type="file"] を取得
+    const fileInput = document.querySelector('.uploader input[type="file"]');
+
+    if (fileInput) {
+      fileInput.addEventListener('change', (evt) => {
+        console.log(evt.target.files[0]);
+      });
+    }
+  });
+</script>
+
+</html>

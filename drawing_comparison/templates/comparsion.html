@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+  <!-- 比較 -->
+  <section class="my-3 bg-light" id="comprsion_secsion">
+    <div class="container">
+      <div class="row text-center">
+        <div class="my-3">
+          <h2>変更箇所比較</h2>
+        </div>
+      </div>
+      <div class="container text-center my-3">
+        <div class="row">
+          <div class="col bg-info-subtle p-5">
+            <h3>現在図面</h3>
+            <div>
+              <input type="text" placeholder="図番を入力してください">
+            </div>
+          </div>
+          <div class="col bg-success-subtle p-5">
+            <h3>最新図面</h3>
+            <div>
+              <input type="text" placeholder="図番を入力してください">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row text-center">
+        <div class="container text-center my-3">
+          <div class="row">
+            <div class="col">
+              <input type="submit" class="btn btn-primary" value="比較開始">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

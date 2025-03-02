@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form演習</title>
+</head>
+<body>
+    <h2>申し込みフォーム</h2>
+    <form action="https://googl.com" method="post">
+        <label for="seminar">希望するセミナー</label>
+        <select name="" id="seminar">
+            <option value="seminar1">セミナー1 (2022年12月1日 木曜日 13:00開催)</option>
+            <option value="seminar2">セミナー2 (2022年12月1日 木曜日 14:00開催)</option>
+            <option value="seminar3">セミナー3 (2022年12月1日 木曜日 15:00開催)</option>
+        </select>
+        <br>
+        <label for="name">お名前（必須）</label>
+        <input type="text" name="name" id="name">
+        <br>
+        <label for="email">メールアドレス（必須）</label>
+        <input type="email" name="email" id="email">
+        <br>
+        <label for="inquiry">備考欄</label>
+        <textarea name="inquiry" id="inquiry" cols="40" rows="4"></textarea>
+        <br>
+        <input type="submit" value="送信">
+    </form>
+
+</body>
+</html>

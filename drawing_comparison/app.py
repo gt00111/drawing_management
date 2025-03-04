@@ -63,6 +63,11 @@ class RegistrationForm(FlaskForm):
         super().__init__(*args, **kwargs)
         self.clientname.choices = load_clients()
 
+# 検索フォームのクラス
+class SearchForm(FlaskForm):
+    searchtext = StringField("検索", validators=[DataRequired()])
+    submit = SubmitField("検索")
+
 
 
 
@@ -82,13 +87,12 @@ def drawing_management():
         if existing_drawing:
             flash("すでに登録されています。")
         else:
-
             drawing = Drawing(clientname=form.clientname.data, modelname=form.modelname.data, drawingnumber=form.drawingnumber.data, version=form.version.data, pagenumber=form.pagenumber.data)
             db.session.add(drawing)
             db.session.commit()
             flash("図面の登録が完了しました。")
             return redirect(url_for("drawing_management"))
-    return render_template("drawing_management.html", form=form, drawings=drawings)
+    return render_template("drawing_management.html", form=form, searchtext=None, drawings=drawings, pagination=drawings, search_mode=False)
 
 @app.route("/<int:drawing_id>/delete", methods=["POST"])
 def delete_drawing(drawing_id):
@@ -102,6 +106,24 @@ def delete_drawing(drawing_id):
 def comparsion():
     return render_template("comparsion.html")
 
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    searchtext = request.args.get("searchtext", "")
+    
+    # 検索ワードに基づいてクエリを実行
+    if searchtext:
+        drawings_pagination = Drawing.query.filter(Drawing.drawingnumber.like(f"%{searchtext}%")).all()
+    else:
+         # 検索しない場合は全データを表示（リダイレクト）
+        return redirect(url_for("drawing_management"))
+
+    return render_template(
+        "drawing_management.html",
+        searchtext=searchtext,
+        drawings=drawings_pagination,  # 検索結果をそのままリストで渡す
+        form=RegistrationForm(),
+        search_mode=True  # 検索中であることを示すフラグ
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)

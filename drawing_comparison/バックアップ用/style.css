@@ -1,0 +1,42 @@
+#drawing_management_body {
+    padding: 70px 0 0 0;
+  }
+
+#comparsion_body {
+    padding: 80px 0 70px 0;
+  }
+
+#comprsion_secsion {
+  padding: 200px 0 200px 0;
+}
+
+.uploader {
+    position: relative;
+    border-radius: 8px;
+    width: 600px; height: 400px;
+    background: #212121;
+    overflow: hidden;
+  }
+  
+  .uploader:before {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 24px; bottom: 24px;
+    left: 24px; right: 24px;
+    border: dashed 2px #fafafa;
+    color: #fafafa;
+    font-size: 14px;
+    content: 'drag and drop your file here';
+    pointer-events: none;
+  }
+  
+  .uploader input {
+    display: block;
+    position: absolute;
+    top: 0; left: 0;
+    width: 600px; height: 400px;
+    font-size: 200px;
+    opacity: 0;
+  }

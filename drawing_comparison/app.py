@@ -6,6 +6,7 @@ from wtforms import StringField, PasswordField, SubmitField, SelectField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+import sqlalchemy
 
 
 
@@ -108,11 +109,11 @@ def comparsion():
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
-    searchtext = request.args.get("searchtext", "")
+    searchtext = request.args.get("searchtext", "").strip()
     
     # 検索ワードに基づいてクエリを実行
     if searchtext:
-        drawings_pagination = Drawing.query.filter(Drawing.drawingnumber.like(f"%{searchtext}%")).all()
+         drawings_pagination = Drawing.query.filter(sqlalchemy.or_(sqlalchemy.func.lower(Drawing.drawingnumber).like(f"%{searchtext}%"),sqlalchemy.func.lower(Drawing.clientname).like(f"%{searchtext}%"),sqlalchemy.func.lower(Drawing.modelname).like(f"%{searchtext}%"))).paginate(per_page=10, error_out=False)
     else:
          # 検索しない場合は全データを表示（リダイレクト）
         return redirect(url_for("drawing_management"))

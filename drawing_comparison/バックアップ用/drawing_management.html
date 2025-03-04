@@ -31,7 +31,12 @@
         </div>
       </div>
     </nav>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      flashメッセージ
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
   </header>
+
 
   <!-- アップロード -->
   <section class="d-flex justify-content-center align-items-center my-3 bg-light pb-5">
@@ -63,7 +68,7 @@
                 <input id="model_name" type="text" name="model_name" class="form-control" placeholder="入力してください">
               </div>
               <div class="mb-3">
-                <label for="figure_number" class="form-label">図番 :</label>
+                <label for="figure_number" class="form-label">図面番号 :</label>
                 <input id="figure_number" type="text" name="figure_number" class="form-control" placeholder="入力してください">
               </div>
               <div class="mb-3">
@@ -80,6 +85,7 @@
                   <option value="5">5</option>
                 </select>
               </div>
+              <button type="submit" class="btn btn-outline w-100 btn-danger" va>登録</button>
             </form>
           </div>
         </div>
@@ -101,7 +107,7 @@
       </div>
     </div>
     <table class="table">
-      <thead>
+      <thead class="table-dark">
         <tr>
           <th scope="col">#</th>
           <th scope="col">顧客名</th>
@@ -109,6 +115,7 @@
           <th scope="col">図番</th>
           <th scope="col">バージョン</th>
           <th scope="col">ページ</th>
+          <th scope="col">削除</th>
         </tr>
       </thead>
       <tbody>
@@ -123,7 +130,7 @@
               <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                 data-bs-target="#exampleModal">見る</button>
             </div>
-            <!-- モーダル -->
+            <!-- 見るモーダル -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
               aria-hidden="true">
               <div class="modal-dialog modal-fullscreen">
@@ -144,6 +151,28 @@
           </td>
           <td class="align-middle">A</td>
           <td class="align-middle">@mdo</td>
+          <td class="align-middle"><button button type="button" class="btn btn- btn-sm btn-danger" data-bs-toggle="modal"
+            data-bs-target="#exampleModal1">
+            削除
+          </button></td>
+          <!-- 削除モーダル -->
+          <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  本当に削除してもよろしいですか？
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                  <button type="button" class="btn btn-danger">削除</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </tr>
         <tr>
           <th scope="row">2</th>

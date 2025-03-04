@@ -1,167 +1,163 @@
 {% extends "base.html" %}
 {% block content %}
 <!-- アップロード -->
-  <section class="d-flex justify-content-center align-items-center my-3 bg-light">
-    <div class="container">
-      <div class="row justify-content-center text-center">
-        <div class="my-3">
-          <h2>図面アップロード</h2>
+<section class="d-flex justify-content-center align-items-center my-3 bg-light pb-5">
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      <div class="my-3">
+        <h2>図面アップロード</h2>
+      </div>
+    </div>
+
+    <div class="row justify-content-center align-items-center">
+      <div class="col-md-6 d-flex justify-content-center align-items-center">
+        <div class="uploader">
+          <input type="file" name="file" />
         </div>
-        <div class="col-md-6 d-flex justify-content-center align-items-center mb-5">
-          <div class="uploader">
-            <input type="file" name="file" />
-          </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card p-3" style="width: 100%;">
+          <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+              <label for="client" class="form-label">顧客名 :</label>
+              <!-- {{ form.clientname(class="form-select") }} -->
+              {{ render_field(form.clientname, class="form-select") }}
+            </div>
+            <div class="mb-3">
+              <label for="modelname" class="form-label">機種 :</label>
+              <!-- {{ form.modelname.label}}{{ form.modelname() }} -->
+              {{ render_field( form.modelname, placeholder="入力してください", class="form-control" ) }}
+            </div>
+            <div class="mb-3">
+              <label for="drawingnumber" class="form-label">図面番号 :</label>
+              <!-- {{ form.drawingnumber.label}}{{ form.drawingnumber() }} -->
+              {{ render_field( form.drawingnumber, placeholder="入力してください", class="form-control") }}    
+            </div>
+            <div class="mb-3">
+              <label for="version" class="form-label">バージョン :</label>
+              <!-- {{ form.version.label}}{{ form.version() }} -->
+              {{ render_field( form.version, placeholder="入力してください", class="form-control") }}
+            </div>
+            <div class="mb-3">
+              <label for="sheet" class="form-label">ページ :</label>
+              <!-- {{ form.pagenumber(class="form-select") }} -->
+              {{ render_field(form.pagenumber, class="form-select") }}            
+            </div>
+            {{ form.submit(class="btn btn-outline w-100 btn-danger") }}
+          </form>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 <!-- 登録図面 -->
-  <section class="mt-4 mb-3 mx-5">
-    <div class="text-center mt-5 mb-4">
-      <h2>登録されている顧客図面</h2>
+<section class="mt-4 mb-3 mx-5">
+  <div class="text-center mt-5 mb-4">
+    <h2>登録されている顧客図面</h2>
+  </div>
+  <div class="col-12 d-flex justify-content-end mb-4">
+    <div class="input-group w-25">
+      <input type="text" class="form-control" placeholder="キーワードを入力">
+      <button class="btn btn-outline-success" type="button" id="button-addon2">
+        <i class="fas fa-search"></i> 検索
+      </button>
     </div>
-    <div class="col-12 d-flex justify-content-end mb-4">
-      <div class="input-group w-25">
-        <input type="text" class="form-control" placeholder="キーワードを入力">
-        <button class="btn btn-outline-success" type="button" id="button-addon2">
-          <i class="fas fa-search"></i> 検索
-        </button>
-      </div>
-    </div>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">顧客名</th>
-          <th scope="col">機種名</th>
-          <th scope="col">図番</th>
-          <th scope="col">バージョン</th>
-          <th scope="col">ページ</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td class="align-middle">TEXT</td>
-          <td class="align-middle">TEXT</td>
-          <td class="align-middle">
-            <div class="d-flex align-items-center gap-2">
-              xxx-xxx-xxx
+  </div>
+  <table class="table">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">顧客名</th>
+        <th scope="col">機種名</th>
+        <th scope="col">図面番号</th>
+        <th scope="col">バージョン</th>
+        <th scope="col">ページ</th>
+        <th scope="col">削除</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for drawing in drawings.items %}
+      <tr>
+        <th scope="row">{{ drawing.id }}</th>
+        <td class="align-middle">{{ drawing.clientname }}</td>
+        <td class="align-middle">{{ drawing.modelname }}</td>
+        <td class="align-middle">
+          <div class="d-flex align-items-center gap-2">
+            {{ drawing.drawingnumber }}
             <!-- ボタンモーダル -->
-              <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">見る</button>
-            </div>
-            <!-- モーダル -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-fullscreen">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">図番</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    指定した図面表示
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-                  </div>
+            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+              data-bs-target="#viewModal_{{ drawing.id }}">見る</button>
+          </div>
+          <!-- 見るモーダル -->
+          <div class="modal fade" id="viewModal_{{ drawing.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">図番</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  指定した図面表示
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
                 </div>
               </div>
             </div>
-          </td>
-          <td class="align-middle">A</td>
-          <td class="align-middle">@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>TEXT</td>
-          <td>TEXT</td>
-          <td><a href="">xxx-xxx-xxx</a></td>
-          <td>1</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>TEXT</td>
-          <td>TEXT</td>
-          <td><a href="">xxx-xxx-xxx</a></td>
-          <td>3</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">4</th>
-          <td>TEXT</td>
-          <td>TEXT</td>
-          <td><a href="">xxx-xxx-xxx</a></td>
-          <td>A</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">5</th>
-          <td>TEXT</td>
-          <td>TEXT</td>
-          <td><a href="">xxx-xxx-xxx</a></td>
-          <td>A</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">6</th>
-          <td>TEXT</td>
-          <td>TEXT</td>
-          <td><a href="">xxx-xxx-xxx</a></td>
-          <td>A</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">7</th>
-          <td>TEXT</td>
-          <td>TEXT</td>
-          <td><a href="">xxx-xxx-xxx</a></td>
-          <td>A</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">8</th>
-          <td>TEXT</td>
-          <td>TEXT</td>
-          <td><a href="">xxx-xxx-xxx</a></td>
-          <td>A</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">9</th>
-          <td>TEXT</td>
-          <td>TEXT</td>
-          <td><a href="">xxx-xxx-xxx</a></td>
-          <td>2</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">10</th>
-          <td>TEXT</td>
-          <td>TEXT</td>
-          <td><a href="">xxx-xxx-xxx</a></td>
-          <td>1</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-  <nav aria-label="Page navigation example" class="d-flex justify-content-center my-5">
-    <ul class="pagination">
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
+          </div>
+        </td>
+        <td class="align-middle">{{ drawing.version }}</td>
+        <td class="align-middle">{{ drawing.pagenumber }}</td>
+        <td class="align-middle"><button button type="button" class="btn btn- btn-sm btn-danger" data-bs-toggle="modal"
+          data-bs-target="#deleteModal_{{ drawing.id }}">
+          削除
+        </button></td>
+        <!-- 削除モーダル -->
+        <div class="modal fade" id="deleteModal_{{ drawing.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">削除確認</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <strong>{{ drawing.drawingnumber }}</strong>本当に削除してもよろしいですか？
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                <form action="{{ url_for('delete_drawing', drawing_id=drawing.id) }}" method="POST">
+                  <button type="submit" class="btn btn-danger">削除</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+<nav aria-label="Page navigation example" class="d-flex justify-content-center my-5">
+  <ul class="pagination">
+    <li {% if drawings.has_prev %}class="page-item"{% else %}class="page-item disabled"{% endif %}><a class="page-link" href="{% if drawings.has_prev %}{{ url_for('drawing_management', page=drawings.prev_num) }}{% else %}#{% endif %}" aria-label="Previous">前へ</a></li>
+
+    {% for page_num in drawings.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2 ) %}
+      {% if page_num %}
+        {% if drawings.page == page_num %}
+          <li class="page-item disabled"><a class="page-link" href="#">{{ page_num }}</a></li>
+        {% else %}
+          <li class="page-item"><a class="page-link" href="{{ url_for('drawing_management', page=page_num) }}">{{ page_num }}</a></li>
+        {% endif %}
+      {% else %}
+        <li class="page-item disabled"><a class="page-link" href="#">&hellip;</a></li>
+      {% endif %}
+    {% endfor %}
+
+    <li {% if drawings.has_next %}class="page-item"{% else %}class="page-item disabled"{% endif %}><a class="page-link" href="{% if drawings.has_next %}{{ url_for('drawing_management', page=drawings.next_num) }}{% else %}#{% endif %}" aria-label="Next">次へ</a></li>
+  </ul>
+</nav>
   {% endblock %}
